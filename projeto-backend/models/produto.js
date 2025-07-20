@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true
     },
     foto: {
-      type: DataTypes.STRING, // Pode ser URL ou base64
+      type: DataTypes.STRING, //url
       allowNull: true
     }
   });
