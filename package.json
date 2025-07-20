@@ -1,14 +1,9 @@
 {
   "name": "projeto-integrador",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "main": "projeto-backend/app.js",
   "scripts": {
-    "start": "node app.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "^5.1.0"
+    "start": "node projeto-backend/app.js",
+    "dev": "nodemon projeto-backend/app.js"
   }
 }
