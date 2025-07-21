@@ -1,25 +1,20 @@
 const express = require('express');
-const http = require('http');
-const db = require('./models'); 
-const produtoRoutes = require('./routes/produtoRoutes');
+const cors = require('cors');
+const { sequelize } = require('./models');
+const fornecedorRoutes = require('./routes/fornecedorRoutes');
 
 const app = express();
-const PORT = 3000;
-
+app.use(cors());
 app.use(express.json());
 
-app.use('/api/produtos', produtoRoutes);
 
-app.get('/', (req, res) => {
-  res.send('Servidor está no ar!');
-});
+sequelize.sync()
+  .then(() => console.log('Banco de dados conectado!'))
+  .catch(err => console.error('Erro ao conectar:', err));
 
-const server = http.createServer(app);
 
-db.sequelize.sync().then(() => {
-  console.log('Banco sincronizado!');
+app.use('/fornecedores', fornecedorRoutes);
 
-  server.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}/`);
-  });
+app.listen(3000, () => {
+  console.log('Servidor rodando na porta 3000');
 });

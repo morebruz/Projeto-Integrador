@@ -1,4 +1,5 @@
-module.exports = (sequelize, DataTypes) => {
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
   const ProdutoFornecedor = sequelize.define('produtoFornecedor', {
     quantidade: {
       type: DataTypes.INTEGER,
@@ -7,5 +8,4 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  return ProdutoFornecedor;
-};
+  module.exports = ProdutoFornecedor;
