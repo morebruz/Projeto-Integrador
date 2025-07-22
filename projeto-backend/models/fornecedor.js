@@ -2,16 +2,34 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const Fornecedor = sequelize.define('Fornecedor', {
-  nome: {
+  nomeEmpresa: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
   cnpj: {
-    type: DataTypes.STRING(14),
+    type: DataTypes.STRING,
     allowNull: false,
-    unique: true
+    unique: true,
   },
-  telefone: DataTypes.STRING
+  endereco: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  telefone: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    validate: {
+      isEmail: true,
+    },
+  },
+  contatoPrincipal: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 module.exports = Fornecedor;

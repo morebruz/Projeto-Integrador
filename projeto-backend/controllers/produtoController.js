@@ -1,15 +1,17 @@
-const produtos = [
-  { id: 1, nome: 'Produto 1', preco: 10.0 },
-  { id: 2, nome: 'Produto 2', preco: 20.0 },
-];
+const Produto = require('../models/produto');
 
-exports.listarProdutos = (req, res) => {
-  res.json(produtos);
+exports.listarProdutos = async (req, res) => {
+  try {
+    const produtos = await Produto.findAll({
+      attributes: ['id', 'nome', 'estoque', 'codigoBarras', 'categoria'],
+      order: [['nome', 'ASC']]
+    });
+    res.json(produtos);
+  } catch (error) {
+    console.error('Erro ao buscar produtos:', error);
+    res.status(500).json({ erro: 'Erro interno no servidor' });
+  }
 };
 
-exports.criarProduto = (req, res) => {
-  const novoProduto = req.body;
-  novoProduto.id = produtos.length + 1;
-  produtos.push(novoProduto);
-  res.status(201).json(novoProduto);
-};
+exports.criarProduto = async (req, res) => { /*...*/ };
+exports.atualizarProduto = async (req, res) => { /*...*/ };

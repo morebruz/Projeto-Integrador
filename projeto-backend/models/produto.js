@@ -1,38 +1,30 @@
-
-
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-  const Produto = sequelize.define('Produto', {
-    nome: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    codigoBarras: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    descricao: {
-      type: DataTypes.STRING,
-      allowNull: true
-    },
-    estoque: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    categoria: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    dataValidade: {
-      type: DataTypes.DATEONLY,
-      allowNull: true
-    },
-    foto: {
-      type: DataTypes.STRING, //url
-      allowNull: true
-    }
-  });
+const Produto = sequelize.define('Produto', {
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  codigoBarras: {
+    type: DataTypes.STRING,
+    unique: true,
+  },
+  descricao: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  quantidade: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  categoria: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  dataValidade: {
+    type: DataTypes.DATE,
+  },
+});
 
-  module.exports = Produto;
+module.exports = Produto;
