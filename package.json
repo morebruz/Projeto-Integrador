@@ -7,9 +7,22 @@
     "dev": "nodemon projeto-backend/app.js"
   },
   "dependencies": {
+    "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7"
-  }
+  },
+  "description": "FACULDADE GRAN (https://faculdade.grancursosonline.com.br/)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morebruz/Projeto-Integrador.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/morebruz/Projeto-Integrador/issues"
+  },
+  "homepage": "https://github.com/morebruz/Projeto-Integrador#readme"
 }

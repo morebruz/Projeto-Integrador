@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { Produto, Fornecedor } = require('../models');
 const { Op } = require('sequelize');
-const produtoController = require('../controllers/produtoController');
 
 // POST - Cadastrar novo produto
 router.post('/', async (req, res) => {
@@ -50,14 +49,12 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET - Listar todos os produtos (com filtros)
-router.get('/', produtoController.listarProdutos);
-router.post('/', produtoController.criarProduto);
+// GET - Listar todos os produtos (com filtros e paginação)
 router.get('/', async (req, res) => {
   try {
     const { categoria, busca, pagina = 1, limite = 10 } = req.query;
     const offset = (pagina - 1) * limite;
-    
+
     const where = {};
     if (categoria) where.categoria = categoria;
     if (busca) {
@@ -107,7 +104,7 @@ router.get('/:id', async (req, res) => {
     const produto = await Produto.findByPk(req.params.id, {
       include: [Fornecedor] // Traz os fornecedores associados
     });
-    
+
     if (!produto) {
       return res.status(404).json({
         success: false,
@@ -136,7 +133,7 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { nome, descricao, categoria, quantidade } = req.body;
-    
+
     const [updated] = await Produto.update(
       { nome, descricao, categoria, quantidade },
       { where: { id: req.params.id } }
@@ -150,9 +147,8 @@ router.put('/:id', async (req, res) => {
       });
     }
 
-    // Retorna o produto atualizado
     const produtoAtualizado = await Produto.findByPk(req.params.id);
-    
+
     res.json({
       success: true,
       message: 'Produto atualizado com sucesso',

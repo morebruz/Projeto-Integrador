@@ -1,51 +1,36 @@
-const db = require('../models');
-const Fornecedor = db.Fornecedor;
+const Fornecedor = require('../models/fornecedor');
 
-exports.criar = async (req, res) => {
+
+exports.create = async (req, res) => {
   try {
-    const fornecedor = await Fornecedor.create(req.body);
+    const { nomeEmpresa, cnpj, endereco, telefone, email, contatoPrincipal } = req.body;
+    
+    
+    const existeFornecedor = await Fornecedor.findOne({ where: { cnpj } });
+    if (existeFornecedor) {
+      return res.status(400).json({ error: 'CNPJ já cadastrado' });
+    }
+
+    const fornecedor = await Fornecedor.create({
+      nomeEmpresa,
+      cnpj,
+      endereco,
+      telefone,
+      email,
+      contatoPrincipal
+    });
+
     res.status(201).json(fornecedor);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-exports.listar = async (req, res) => {
+
+exports.findAll = async (req, res) => {
   try {
     const fornecedores = await Fornecedor.findAll();
     res.json(fornecedores);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-exports.buscarPorId = async (req, res) => {
-  try {
-    const fornecedor = await Fornecedor.findByPk(req.params.id);
-    if (!fornecedor) return res.status(404).json({ error: 'Fornecedor não encontrado' });
-    res.json(fornecedor);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-exports.atualizar = async (req, res) => {
-  try {
-    const fornecedor = await Fornecedor.findByPk(req.params.id);
-    if (!fornecedor) return res.status(404).json({ error: 'Fornecedor não encontrado' });
-    await fornecedor.update(req.body);
-    res.json(fornecedor);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-exports.deletar = async (req, res) => {
-  try {
-    const fornecedor = await Fornecedor.findByPk(req.params.id);
-    if (!fornecedor) return res.status(404).json({ error: 'Fornecedor não encontrado' });
-    await fornecedor.destroy();
-    res.json({ message: 'Fornecedor deletado com sucesso' });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
